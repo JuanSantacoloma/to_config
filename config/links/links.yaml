@@ -1,0 +1,24 @@
+base: base
+left_front:
+  - LF_HIP
+  - LF_FLX1
+  - LF_FLX2
+  - LF_FT
+
+right_front:
+  - RF_HIP
+  - RF_FLX1
+  - RF_FLX2
+  - RF_FT
+
+left_hind:
+  - LR_HIP
+  - LR_FLX1
+  - LR_FLX2
+  - LR_FT
+
+right_hind:
+  - RR_HIP
+  - RR_FLX1
+  - RR_FLX2
+  - RR_FT

@@ -1,0 +1,23 @@
+left_front:
+  - LF_ABD
+  - LF_HF1
+  - LF_FF2
+  - LF_FT_FX
+
+right_front:
+  - RF_ABD
+  - RF_HF1
+  - RF_FF2
+  - RF_FT_FX
+
+left_hind:
+  - LR_ABD
+  - LR_HF1
+  - LR_FF2
+  - LR_FT_FX
+
+right_hind:
+  - RR_ABD
+  - RR_HF1
+  - RR_FF2
+  - RR_FT_FX

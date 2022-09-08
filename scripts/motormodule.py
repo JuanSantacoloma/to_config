@@ -77,11 +77,18 @@ class MotorModuleController():
         """
         Puts motor with CAN ID "id" into torque-control mode.  2nd red LED will turn on
         """
-        b = b'\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFC'
-        # id_b=bytes(bytearray([id]))
-        msg_can = can.Message(arbitration_id=self.id, data=b, is_extended_id=False)
-        self.can0.send(msg_can)
+        up = b'\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFC'
+        self.joint_com = Frame()
+        self.joint_com.header = std_msgs.msg.Header()
+        self.joint_com.id = int(3)
+        self.joint_com.is_rtr=False
+        self.joint_com.is_extended=False
+        self.joint_com.is_error=False
+        self.joint_com.dlc =8
+        self.joint_com.data = up
+        self.com_can.publish(self.joint_com)
         print("Enable motor", self.id)
+        return self.joint_com
 
     def disable_motor(self):
         """
@@ -138,13 +145,14 @@ class MotorModuleController():
         # print("datasend =",b)
         self.joint_com = Frame()
         self.joint_com.header = std_msgs.msg.Header()
-        self.joint_com.id =
+        self.joint_com.id = int(3)
         self.joint_com.is_rtr=False
         self.joint_com.is_extended=False
         self.joint_com.is_error=False
         self.joint_com.dlc =8
         self.joint_com.data = b
-        self.com_can.publish(joint_com)
+        self.com_can.publish(self.joint_com)
+        print('send',b)
         return self.joint_com
 
     def float_to_uint(self,x, x_min, x_max, bits):

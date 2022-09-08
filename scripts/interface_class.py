@@ -10,8 +10,7 @@ from trajectory_msgs.msg import JointTrajectory
 from sensor_msgs.msg import JointState
 import os
 
-
-# from motormodule import MotorModuleController
+from motormodule import MotorModuleController
 # from can_msgs import Frame
 class Interface:
     
@@ -42,11 +41,10 @@ class Interface:
         # joints_state.effort = []
         self.init_can()
 
-
         self.joints_trayec = JointTrajectory
 
         # Subscribers
-        rospy.Subscriber("/joint_group_position_controller/command", JointTrajectory, self.control_callback, queue_size=10 )
+        # rospy.Subscriber("/joint_group_position_controller/command", JointTrajectory, self.control_callback, queue_size=10 )
         rospy.Subscriber("/joints_calibrator", JointState, self.control_callback, queue_size=10 )
         # rospy.Subscriber("topic", Type, callback)
 
@@ -77,11 +75,12 @@ class Interface:
             rospy.logwarn("Error reading joint_group_position_controller")
             return
         
-        LF_ABD_motor = MotorModuleController(1)
-        LF_FLX1_motor = MotorModuleController(2)
+        # LF_ABD_motor = MotorModuleController(1)
+        # LF_FLX1_motor = MotorModuleController(2)
         LF_FLX2_motor = MotorModuleController(3)
 
-        LF_FLX2_motor.send_command(LF_ABD, 0, kp, kd, i_ff)
+        LF_FLX2_motor.enable_motor()
+        LF_FLX2_motor.send_command(LF_ABD, 0, 1, 0, 0)
         
 
     def init_can(self):

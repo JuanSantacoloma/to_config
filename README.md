@@ -75,3 +75,9 @@ Spawning a robot:
 
 ---
 :exclamation: *This is not an official product from the robot's company/author.*
+
+# PASO A PASO
+* lauch roslaunch to_config bringup.launch rviz:=true hardware_connected:=true publish_joint_control:=false
+* roslaunch champ_bringup joints_gui.launch
+* rosrun socketcan_bridge socketcan_bridge_node 
+* rosrun to_config interface_node.py

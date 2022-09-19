@@ -18,7 +18,9 @@ This command will run i3, this is a windows manager for ubuntu. The computer in 
 
     `cntrl + d`
     
-8. Now, finally you can run the commands:
+8. Before you run some commands make sure the USB to CAN device is connected to the computer and the leds in the PCB are on.
+
+9. Now, finally you can run the next commands and make the motors move:
 * The first command activate the CAN BUS communication.
 
     `sudo ip link set can0 type can bitrate 100000`

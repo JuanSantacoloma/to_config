@@ -1,83 +1,27 @@
-
-## 1. Quick Start
-
-You don't need a physical robot to run the following demos. 
-
-### 1.1. Walking demo in RVIZ:
-
-#### 1.1.1. Run the base driver:
-
-    roslaunch to_config bringup.launch rviz:=true
-
-#### 1.1.2. Run the teleop node:
-
-    roslaunch champ_teleop teleop.launch
-
-If you want to use a [joystick](https://www.logitechg.com/en-hk/products/gamepads/f710-wireless-gamepad.html) add joy:=true as an argument.
-
-
-### 1.2. SLAM demo:
-
-#### 1.2.1. Run the Gazebo environment:
-
-    roslaunch to_config gazebo.launch 
-
-#### 1.2.2. Run gmapping package and move_base:
-
-    roslaunch to_config slam.launch rviz:=true
-
-To start mapping:
-
-- Click '2D Nav Goal'.
-- Click and drag at the position you want the robot to go.
-
-   ![champ](https://raw.githubusercontent.com/chvmp/champ/master/docs/images/slam.gif)
-
-- Save the map by running:
-
-      roscd to_config/maps
-      rosrun map_server map_saver
-
-### 1.3. Autonomous Navigation:
-
-#### 1.3.1. Run the Gazebo environment: 
-
-    roslaunch to_config gazebo.launch 
-
-#### 1.3.2. Run amcl and move_base:
-
-    roslaunch to_config navigate.launch rviz:=true
-
-To navigate:
-
-- Click '2D Nav Goal'.
-- Click and drag at the position you want the robot to go.
-
-   ![champ](https://raw.githubusercontent.com/chvmp/champ/master/docs/images/navigation.gif)
-
-#### 1.4.1 Spawning multiple robots in Gazebo
-
-Run Gazebo and default simulation world:
-
-    roslaunch champ_gazebo spawn_world.launch 
-
-You can also load your own world file by passing your world's path to 'gazebo_world' argument:
-
-    roslaunch champ_gazebo spawn_world.launch gazebo_world:=<path_to_world_file>
-
-Spawning a robot:
-
-    roslaunch to_config spawn_robot.launch robot_name:=<unique_robot_name> world_init_x:=<x_position> world_init_y:=<y_position>
-
-    
-* Every instance of the spawned robot must have a unique robot name to prevent the topics and transforms from clashing.
-
-
----
-:exclamation: *This is not an official product from the robot's company/author.*
-
-# PASO A PASO
-* lauch roslaunch to_config bringup.launch rviz:=true hardware_connected:=true publish_joint_control:=false
-* roslaunch champ_bringup joints_gui.launch
-* rosrun socketcan_bridge socketcan_bridge_node 
-* rosrun to_config interface_node.py
+# Step by step
+1. Connect the 2 batteries needed for the robot to function. Ask for help if you never used these LiPo batteries.
+2. Connect the power supply of the computer (intel NUC) to the wall and turn it on.
+3. Turn on the robot using the on/off button.
+4. Make sure the keyboard and the screen are connected to the computer (intel NUC).
+5. After the ubuntu loading procces, log in. Ask Juan Camilo for the creedentials.
+6. In the terminal use the command:
+    startx
+This command will run i3, this is a windows manager for ubuntu. The computer in the robot runs ubuntu server.
+7. For i3 you need to know 2 basic commands
+* 
+    cntrl + enter
+    This open a new terminal
+* 
+    cntrl + d
+    This opens a menu in the top, this let's you search the programs installed in the computer.
+8. Now, finally you can run the commands:
+* The first command activate the CAN BUS communication.
+    sudo ip link set can0 type can bitrate 100000
+* The next command runs the ROS package for CAN communication, this creates 2 important topics: \send_messages and \recive_messages
+    rosrun socketcan_bridge socketcan_bridge_node
+* This full command runs the Champ package with the configuration for the quadruped robot TO, with Rviz on, hardware_connected is set to true wich means that you have motors and connection allowed and finally the parameter publish_joint_control, this is set to False because we want to move the joints in manual mode first. 
+    roslaunch to_config bringup.launch rviz:=true hardware_connected:=true publish_joint_control:=false
+* joint_gui.launch allows to have a graphic interface with sliders for every single motor/joint in the robot.
+    roslaunch champ_bringup joints_gui.launch
+* Finally the code where we send commands.
+    rosrun to_config interface_node.py
